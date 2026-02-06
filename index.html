@@ -4,15 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Планировщик смен</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <div id="root"></div>
   
-  <script type="module">
-    import React, { useState } from 'https://esm.sh/react@18.2.0';
-    import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
-    import { Calendar, Plus, Trash2, Filter, Copy, FileText, Users, X, Clock } from 'https://esm.sh/lucide-react@0.263.1';
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script type="text/babel">
+    const { useState } = React;
+    
+    // Иконки
+    const Calendar = () => <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>;
+    const Plus = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>;
+    const Trash2 = () => <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>;
+    const Copy = () => <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>;
+    const FileText = () => <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>;
+    const Filter = () => <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>;
+    const Users = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>;
+    const X = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>;
+    const Clock = () => <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
 
     const ShiftScheduler = () => {
       const [employees, setEmployees] = useState(['Alexey', 'Juan', 'Bogdan', 'Andrey', 'Vadim']);
@@ -24,122 +38,13 @@
       const statuses = ['Работает', 'Отпуск', 'Выходной'];
       
       const getInitialSchedule = () => {
-        return ${JSON.stringify({
+        return {
           '2026-02-04': {
             'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
             'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
             'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-05': {
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-06': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-07': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-08': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-09': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-10': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-11': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-12': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-13': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-14': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-15': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-16': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-17': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-18': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-19': {
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-20': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-21': {
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-22': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-23': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-24': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-25': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-26': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }, { name: 'Vadim', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-27': {
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }, { name: 'Bogdan', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
-          },
-          '2026-02-28': {
-            'A': [{ name: 'Alexey', status: 'Работает', hours: 9 }],
-            'B': [{ name: 'Andrey', status: 'Работает', hours: 9 }],
-            'C': [{ name: 'Juan', status: 'Работает', hours: 9 }]
           }
-        }, null, 2)};
+        };
       };
 
       const [schedule, setSchedule] = useState(getInitialSchedule());
@@ -170,7 +75,7 @@
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        return \`\${year}-\${month}-\${day}\`;
+        return `${year}-${month}-${day}`;
       };
 
       const addShift = () => {
@@ -181,7 +86,7 @@
         
         const hours = parseFloat(selectedHours);
         if (isNaN(hours) || hours <= 0 || hours > 24) {
-          alert('Введите корректное количество часов (от 0.5 до 24)!');
+          alert('Введите корректное количество часов!');
           return;
         }
         
@@ -197,7 +102,7 @@
         
         const exists = newSchedule[selectedDate][selectedShift].some(emp => emp.name === selectedEmployee);
         if (exists) {
-          alert('Этот сотрудник уже добавлен в эту смену!');
+          alert('Этот сотрудник уже добавлен!');
           return;
         }
         
@@ -210,40 +115,35 @@
         setSchedule(newSchedule);
         setSelectedEmployee('');
         setSelectedShift('');
-        setSelectedHours('9');
         alert('Смена добавлена!');
       };
 
       const addEmployee = () => {
         if (!newEmployeeName.trim()) {
-          alert('Введите имя сотрудника!');
+          alert('Введите имя!');
           return;
         }
         
         if (employees.includes(newEmployeeName.trim())) {
-          alert('Такой сотрудник уже существует!');
+          alert('Уже существует!');
           return;
         }
         
         setEmployees([...employees, newEmployeeName.trim()]);
         setNewEmployeeName('');
         setShowAddEmployee(false);
-        alert('Сотрудник добавлен!');
+        alert('Добавлен!');
       };
 
       const deleteEmployee = (employeeName) => {
         const newSchedule = JSON.parse(JSON.stringify(schedule));
         Object.keys(newSchedule).forEach(dateKey => {
           Object.keys(newSchedule[dateKey]).forEach(shiftId => {
-            newSchedule[dateKey][shiftId] = newSchedule[dateKey][shiftId].filter(
-              emp => emp.name !== employeeName
-            );
-            
+            newSchedule[dateKey][shiftId] = newSchedule[dateKey][shiftId].filter(emp => emp.name !== employeeName);
             if (newSchedule[dateKey][shiftId].length === 0) {
               delete newSchedule[dateKey][shiftId];
             }
           });
-          
           if (Object.keys(newSchedule[dateKey]).length === 0) {
             delete newSchedule[dateKey];
           }
@@ -251,7 +151,7 @@
         
         setEmployees(employees.filter(emp => emp !== employeeName));
         setSchedule(newSchedule);
-        alert('Сотрудник удален!');
+        alert('Удален!');
       };
 
       const removeEmployee = (dateKey, shift, employeeName) => {
@@ -285,7 +185,7 @@
           newSchedule[dateKey] = JSON.parse(JSON.stringify(copiedDay));
           setSchedule(newSchedule);
           setCopiedDay(null);
-          alert('День вставлен!');
+          alert('Вставлен!');
         }
       };
 
@@ -301,7 +201,7 @@
         });
         
         if (Object.keys(monthData).length === 0) {
-          alert('В этом месяце нет смен для копирования!');
+          alert('Нет смен!');
           return;
         }
         
@@ -311,27 +211,19 @@
           year: currentMonth.getFullYear()
         });
         
-        alert(\`Месяц скопирован! Найдено смен: \${Object.keys(monthData).length}\`);
+        alert(`Скопировано: ${Object.keys(monthData).length}`);
       };
 
       const pasteMonth = () => {
-        if (!copiedMonth) {
-          alert('Сначала скопируйте месяц!');
-          return;
-        }
+        if (!copiedMonth) return;
         
         const targetMonth = currentMonth.getMonth();
         const targetYear = currentMonth.getFullYear();
-        const sourceMonth = copiedMonth.month;
-        const sourceYear = copiedMonth.year;
         
-        if (targetMonth === sourceMonth && targetYear === sourceYear) {
-          alert('Нельзя вставить месяц в тот же месяц! Переключитесь на другой месяц.');
+        if (targetMonth === copiedMonth.month && targetYear === copiedMonth.year) {
+          alert('Нельзя в тот же месяц!');
           return;
         }
-        
-        const sourceMonthName = new Date(sourceYear, sourceMonth).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
-        const targetMonthName = currentMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
         
         const newSchedule = { ...schedule };
         let addedCount = 0;
@@ -339,7 +231,6 @@
         Object.keys(copiedMonth.data).forEach(sourceDateKey => {
           const sourceDate = new Date(sourceDateKey + 'T00:00:00');
           const dayOfMonth = sourceDate.getDate();
-          
           const targetDate = new Date(targetYear, targetMonth, dayOfMonth);
           
           if (targetDate.getMonth() === targetMonth) {
@@ -351,13 +242,13 @@
         
         setSchedule(newSchedule);
         setCopiedMonth(null);
-        alert(\`График вставлен из \${sourceMonthName} в \${targetMonthName}!\\nДобавлено дней: \${addedCount}\`);
+        alert(`Вставлено дней: ${addedCount}`);
       };
 
       const clearMonth = () => {
         const days = getDaysInMonth(currentMonth);
-        
         let shiftsCount = 0;
+        
         days.forEach(date => {
           const dateKey = getDateKey(date);
           if (schedule[dateKey]) {
@@ -368,7 +259,7 @@
         });
         
         if (shiftsCount === 0) {
-          alert('В этом месяце нет смен для удаления!');
+          alert('Нет смен!');
           return;
         }
         
@@ -379,27 +270,19 @@
       const processClearMonth = () => {
         if (clearStep === 1) {
           setClearStep(2);
-        } else if (clearStep === 2) {
-          const monthName = currentMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+        } else {
           const days = getDaysInMonth(currentMonth);
-          
           const newSchedule = { ...schedule };
-          let shiftsCount = 0;
           
           days.forEach(date => {
             const dateKey = getDateKey(date);
-            if (newSchedule[dateKey]) {
-              Object.keys(newSchedule[dateKey]).forEach(shiftId => {
-                shiftsCount += newSchedule[dateKey][shiftId].length;
-              });
-              delete newSchedule[dateKey];
-            }
+            delete newSchedule[dateKey];
           });
           
           setSchedule(newSchedule);
           setShowClearConfirm(false);
           setClearStep(1);
-          alert(\`Месяц \${monthName} очищен! Удалено смен: \${shiftsCount}\`);
+          alert('Очищено!');
         }
       };
 
@@ -420,342 +303,218 @@
       const days = getDaysInMonth(currentMonth);
       const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
-      return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4" },
-        React.createElement('div', { className: "max-w-7xl mx-auto" },
-          React.createElement('div', { className: "bg-white rounded-2xl shadow-xl p-6 mb-6" },
-            React.createElement('div', { className: "flex items-center justify-between mb-6" },
-              React.createElement('div', { className: "flex items-center gap-3" },
-                React.createElement(Calendar, { className: "w-8 h-8 text-indigo-600" }),
-                React.createElement('h1', { className: "text-3xl font-bold text-gray-800" }, 'Планировщик смен')
-              ),
-              React.createElement('div', { className: "flex gap-2" },
-                React.createElement('button', {
-                  onClick: copyMonth,
-                  className: "flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                },
-                  React.createElement(Copy, { className: "w-4 h-4" }),
-                  'Копировать месяц'
-                ),
-                copiedMonth && React.createElement('button', {
-                  onClick: pasteMonth,
-                  className: "flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-                },
-                  React.createElement(FileText, { className: "w-4 h-4" }),
-                  'Вставить месяц'
-                ),
-                React.createElement('button', {
-                  onClick: clearMonth,
-                  className: "flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                },
-                  React.createElement(Trash2, { className: "w-4 h-4" }),
-                  'Очистить месяц'
-                )
-              )
-            ),
-            React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-6" },
-              React.createElement('div', null,
-                React.createElement('label', { className: "block text-sm font-medium text-gray-700 mb-2" }, 'Дата'),
-                React.createElement('input', {
-                  type: "date",
-                  value: selectedDate,
-                  onChange: (e) => setSelectedDate(e.target.value),
-                  className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                })
-              ),
-              React.createElement('div', null,
-                React.createElement('label', { className: "block text-sm font-medium text-gray-700 mb-2" }, 'Сотрудник'),
-                React.createElement('select', {
-                  value: selectedEmployee,
-                  onChange: (e) => setSelectedEmployee(e.target.value),
-                  className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                },
-                  React.createElement('option', { value: "" }, 'Выберите'),
-                  employees.map(emp => React.createElement('option', { key: emp, value: emp }, emp))
-                )
-              ),
-              React.createElement('div', null,
-                React.createElement('label', { className: "block text-sm font-medium text-gray-700 mb-2" }, 'Смена'),
-                React.createElement('select', {
-                  value: selectedShift,
-                  onChange: (e) => setSelectedShift(e.target.value),
-                  className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                },
-                  React.createElement('option', { value: "" }, 'Выберите'),
-                  shifts.map(shift => React.createElement('option', { key: shift.id, value: shift.id }, \`\${shift.name} (\${shift.time})\`))
-                )
-              ),
-              React.createElement('div', null,
-                React.createElement('label', { className: "block text-sm font-medium text-gray-700 mb-2" }, 'Часы'),
-                React.createElement('input', {
-                  type: "number",
-                  step: "0.5",
-                  min: "0.5",
-                  max: "24",
-                  value: selectedHours,
-                  onChange: (e) => setSelectedHours(e.target.value),
-                  className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                })
-              ),
-              React.createElement('div', null,
-                React.createElement('label', { className: "block text-sm font-medium text-gray-700 mb-2" }, 'Статус'),
-                React.createElement('select', {
-                  value: selectedStatus,
-                  onChange: (e) => setSelectedStatus(e.target.value),
-                  className: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                },
-                  statuses.map(status => React.createElement('option', { key: status, value: status }, status))
-                )
-              ),
-              React.createElement('div', { className: "flex items-end" },
-                React.createElement('button', {
-                  onClick: addShift,
-                  className: "w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-                },
-                  React.createElement(Plus, { className: "w-4 h-4" }),
-                  'Добавить'
-                )
-              )
-            ),
-            React.createElement('div', { className: "flex items-center gap-4" },
-              React.createElement(Filter, { className: "w-5 h-5 text-gray-600" }),
-              React.createElement('select', {
-                value: filterEmployee,
-                onChange: (e) => setFilterEmployee(e.target.value),
-                className: "px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              },
-                React.createElement('option', { value: "" }, 'Все сотрудники'),
-                employees.map(emp => React.createElement('option', { key: emp, value: emp }, emp))
-              ),
-              copiedDay && React.createElement('span', { className: "text-sm text-green-600 font-medium" }, '✓ День скопирован'),
-              copiedMonth && React.createElement('span', { className: "text-sm text-blue-600 font-medium" },
-                \`✓ Месяц скопирован: \${new Date(copiedMonth.year, copiedMonth.month).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}\`
-              ),
-              React.createElement('button', {
-                onClick: () => setShowAddEmployee(!showAddEmployee),
-                className: "ml-auto flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-              },
-                React.createElement(Users, { className: "w-4 h-4" }),
-                'Добавить сотрудника'
-              ),
-              React.createElement('button', {
-                onClick: () => setShowManageEmployees(!showManageEmployees),
-                className: "flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition"
-              },
-                React.createElement(Users, { className: "w-4 h-4" }),
-                'Управление сотрудниками'
-              )
-            ),
-            showAddEmployee && React.createElement('div', { className: "mt-4 p-4 bg-purple-50 rounded-lg border-2 border-purple-200" },
-              React.createElement('h3', { className: "text-lg font-semibold text-gray-800 mb-3" }, 'Новый сотрудник'),
-              React.createElement('div', { className: "flex gap-3" },
-                React.createElement('input', {
-                  type: "text",
-                  value: newEmployeeName,
-                  onChange: (e) => setNewEmployeeName(e.target.value),
-                  placeholder: "Введите имя сотрудника",
-                  className: "flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500",
-                  onKeyPress: (e) => e.key === 'Enter' && addEmployee()
-                }),
-                React.createElement('button', {
-                  onClick: addEmployee,
-                  className: "px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-                }, 'Добавить'),
-                React.createElement('button', {
-                  onClick: () => {
-                    setShowAddEmployee(false);
-                    setNewEmployeeName('');
-                  },
-                  className: "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
-                }, 'Отмена')
-              )
-            ),
-            showManageEmployees && React.createElement('div', { className: "mt-4 p-4 bg-orange-50 rounded-lg border-2 border-orange-200" },
-              React.createElement('h3', { className: "text-lg font-semibold text-gray-800 mb-3" }, 'Список сотрудников'),
-              React.createElement('div', { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" },
-                employees.map(emp => React.createElement('div', { key: emp, className: "flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200" },
-                  React.createElement('span', { className: "font-medium text-gray-800" }, emp),
-                  React.createElement('button', {
-                    onClick: () => deleteEmployee(emp),
-                    className: "text-red-600 hover:text-red-800 hover:bg-red-100 p-1 rounded",
-                    title: "Удалить сотрудника"
-                  }, React.createElement(X, { className: "w-4 h-4" }))
-                ))
-              ),
-              React.createElement('button', {
-                onClick: () => setShowManageEmployees(false),
-                className: "mt-4 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
-              }, 'Закрыть')
-            ),
-            showClearConfirm && React.createElement('div', { className: "mt-4 p-6 bg-red-50 rounded-lg border-2 border-red-300" },
-              React.createElement('h3', { className: "text-xl font-bold text-red-800 mb-4" }, '⚠️ ПРЕДУПРЕЖДЕНИЕ: Удаление всех смен месяца'),
-              clearStep === 1 && React.createElement(React.Fragment, null,
-                React.createElement('p', { className: "text-gray-800 mb-4 text-lg" },
-                  'Вы собираетесь удалить ВСЕ смены за ',
-                  React.createElement('strong', null, currentMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })),
-                  '.'
-                ),
-                React.createElement('p', { className: "text-gray-700 mb-6" }, 'Это действие НЕВОЗМОЖНО отменить!'),
-                React.createElement('div', { className: "flex gap-3" },
-                  React.createElement('button', {
-                    onClick: processClearMonth,
-                    className: "px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition font-semibold"
-                  }, 'Продолжить'),
-                  React.createElement('button', {
-                    onClick: () => {
-                      setShowClearConfirm(false);
-                      setClearStep(1);
-                    },
-                    className: "px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
-                  }, 'Отмена')
-                )
-              ),
-              clearStep === 2 && React.createElement(React.Fragment, null,
-                React.createElement('p', { className: "text-gray-800 mb-4 text-lg font-bold" }, 'ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ!'),
-                React.createElement('p', { className: "text-gray-700 mb-6" },
-                  'Вы точно уверены, что хотите удалить все смены за ',
-                  currentMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' }),
-                  '? Восстановить данные будет НЕВОЗМОЖНО!'
-                ),
-                React.createElement('div', { className: "flex gap-3" },
-                  React.createElement('button', {
-                    onClick: processClearMonth,
-                    className: "px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold"
-                  }, 'ДА, УДАЛИТЬ ВСЕ СМЕНЫ'),
-                  React.createElement('button', {
-                    onClick: () => {
-                      setShowClearConfirm(false);
-                      setClearStep(1);
-                    },
-                    className: "px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition"
-                  }, 'Отмена')
-                )
-              )
-            )
-          ),
-          React.createElement('div', { className: "bg-white rounded-2xl shadow-xl p-6" },
-            React.createElement('div', { className: "flex items-center justify-between mb-6" },
-              React.createElement('button', {
-                onClick: () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1)),
-                className: "px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
-              }, '← Назад'),
-              React.createElement('h2', { className: "text-2xl font-bold text-gray-800 capitalize" },
-                currentMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })
-              ),
-              React.createElement('button', {
-                onClick: () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1)),
-                className: "px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
-              }, 'Вперед →')
-            ),
-            React.createElement('div', { className: "grid grid-cols-7 gap-2" },
-              dayNames.map(day => React.createElement('div', { key: day, className: "text-center font-bold text-gray-700 py-2" }, day)),
-              Array(days[0].getDay() === 0 ? 6 : days[0].getDay() - 1).fill(null).map((_, i) =>
-                React.createElement('div', { key: \`empty-\${i}\`, className: "bg-gray-50 rounded-lg p-2 min-h-40" })
-              ),
-              days.map(date => {
-                const dateKey = getDateKey(date);
-                const daySchedule = schedule[dateKey] || {};
-                
-                return React.createElement('div', {
-                  key: dateKey,
-                  className: "bg-gray-50 rounded-lg p-2 min-h-40 border-2 border-gray-200 hover:border-indigo-300 transition"
-                },
-                  React.createElement('div', { className: "flex items-center justify-between mb-2" },
-                    React.createElement('div', { className: "font-semibold text-gray-700" }, date.getDate()),
-                    React.createElement('div', { className: "flex gap-1" },
-                      React.createElement('button', {
-                        onClick: () => copyDay(dateKey),
-                        className: "p-1 text-blue-600 hover:bg-blue-100 rounded",
-                        title: "Копировать день"
-                      }, React.createElement(Copy, { className: "w-3 h-3" })),
-                      copiedDay && React.createElement('button', {
-                        onClick: () => pasteDay(dateKey),
-                        className: "p-1 text-green-600 hover:bg-green-100 rounded",
-                        title: "Вставить день"
-                      }, React.createElement(FileText, { className: "w-3 h-3" }))
-                    )
-                  ),
-                  React.createElement('div', { className: "space-y-1" },
-                    shifts.map(shift => {
-                      const shiftEmployees = daySchedule[shift.id] || [];
-                      const filteredEmployees = filterEmployee 
-                        ? shiftEmployees.filter(emp => emp.name === filterEmployee)
-                        : shiftEmployees;
-                      
-                      if (filteredEmployees.length === 0) return null;
-                      
-                      const totalHours = getTotalHours(dateKey, shift.id);
-                      const isPartial = totalHours < shift.duration;
-                      
-                      return React.createElement('div', { key: shift.id, className: "mb-2" },
-                        React.createElement('div', { className: "flex items-center justify-between mb-1" },
-                          React.createElement('div', { className: "text-xs font-semibold text-indigo-700" }, shift.name),
-                          isPartial && React.createElement('div', { className: "flex items-center gap-1 text-xs text-orange-600" },
-                            React.createElement(Clock, { className: "w-3 h-3" }),
-                            React.createElement('span', null, \`\${totalHours}/\${shift.duration}ч\`)
-                          )
-                        ),
-                        React.createElement('div', { className: "text-xs text-gray-500 mb-1" }, shift.time),
-                        filteredEmployees.map((emp, idx) =>
-                          React.createElement('div', {
-                            key: idx,
-                            className: \`p-1.5 rounded border \${getStatusColor(emp.status)} text-xs mb-1\`
-                          },
-                            React.createElement('div', { className: "flex items-center justify-between" },
-                              React.createElement('div', { className: "flex items-center gap-1" },
-                                React.createElement('span', { className: "font-medium" }, emp.name),
-                                emp.hours && emp.hours !== shift.duration && React.createElement('span', { className: "text-xs text-gray-600" }, \`(\${emp.hours}ч)\`)
-                              ),
-                              React.createElement('button', {
-                                onClick: () => removeEmployee(dateKey, shift.id, emp.name),
-                                className: "text-red-600 hover:text-red-800"
-                              }, React.createElement(Trash2, { className: "w-3 h-3" }))
-                            )
-                          )
-                        )
-                      );
-                    })
-                  )
-                );
-              })
-            )
-          ),
-          React.createElement('div', { className: "mt-6 bg-white rounded-2xl shadow-xl p-6" },
-            React.createElement('h3', { className: "text-xl font-bold text-gray-800 mb-4" }, 'Легенда'),
-            React.createElement('div', { className: "flex flex-wrap gap-4 mb-4" },
-              React.createElement('div', { className: "flex items-center gap-2" },
-                React.createElement('div', { className: "w-6 h-6 bg-green-100 border-2 border-green-300 rounded" }),
-                React.createElement('span', { className: "text-gray-700" }, 'Работает')
-              ),
-              React.createElement('div', { className: "flex items-center gap-2" },
-                React.createElement('div', { className: "w-6 h-6 bg-yellow-100 border-2 border-yellow-300 rounded" }),
-                React.createElement('span', { className: "text-gray-700" }, 'Отпуск')
-              ),
-              React.createElement('div', { className: "flex items-center gap-2" },
-                React.createElement('div', { className: "w-6 h-6 bg-red-100 border-2 border-red-300 rounded" }),
-                React.createElement('span', { className: "text-gray-700" }, 'Выходной')
-              ),
-              React.createElement('div', { className: "flex items-center gap-2" },
-                React.createElement(Clock, { className: "w-5 h-5 text-orange-600" }),
-                React.createElement('span', { className: "text-gray-700" }, 'Частичное покрытие смены')
-              )
-            ),
-            React.createElement('div', { className: "text-sm text-gray-600" },
-              React.createElement('p', null, React.createElement('strong', null, 'Смены (время UTC):')),
-              React.createElement('p', null, '• Смена A: 00:00-09:00 (9 часов)'),
-              React.createElement('p', null, '• Смена B: 06:00-15:00 (9 часов)'),
-              React.createElement('p', null, '• Смена C: 15:00-00:00 (9 часов)'),
-              React.createElement('p', { className: "mt-2" },
-                React.createElement('strong', null, 'Совет:'),
-                ' Вы можете указать любое количество часов для частичного покрытия смены (например, 3 часа из 9)'
-              )
-            )
-          )
-        )
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <Calendar />
+                  <h1 className="text-3xl font-bold text-gray-800">Планировщик смен</h1>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={copyMonth} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <Copy />Копировать месяц
+                  </button>
+                  {copiedMonth && (
+                    <button onClick={pasteMonth} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                      <FileText />Вставить месяц
+                    </button>
+                  )}
+                  <button onClick={clearMonth} className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    <Trash2 />Очистить месяц
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Дата</label>
+                  <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Сотрудник</label>
+                  <select value={selectedEmployee} onChange={(e) => setSelectedEmployee(e.target.value)} className="w-full px-3 py-2 border rounded-lg">
+                    <option value="">Выберите</option>
+                    {employees.map(emp => <option key={emp} value={emp}>{emp}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Смена</label>
+                  <select value={selectedShift} onChange={(e) => setSelectedShift(e.target.value)} className="w-full px-3 py-2 border rounded-lg">
+                    <option value="">Выберите</option>
+                    {shifts.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Часы</label>
+                  <input type="number" step="0.5" min="0.5" max="24" value={selectedHours} onChange={(e) => setSelectedHours(e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Статус</label>
+                  <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-3 py-2 border rounded-lg">
+                    {statuses.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
+                <div className="flex items-end">
+                  <button onClick={addShift} className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    <Plus />Добавить
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <Filter />
+                <select value={filterEmployee} onChange={(e) => setFilterEmployee(e.target.value)} className="px-3 py-2 border rounded-lg">
+                  <option value="">Все</option>
+                  {employees.map(emp => <option key={emp} value={emp}>{emp}</option>)}
+                </select>
+                {copiedDay && <span className="text-sm text-green-600">✓ День скопирован</span>}
+                {copiedMonth && <span className="text-sm text-blue-600">✓ Месяц скопирован</span>}
+                <button onClick={() => setShowAddEmployee(!showAddEmployee)} className="ml-auto px-4 py-2 bg-purple-600 text-white rounded-lg">
+                  <Users />Добавить
+                </button>
+                <button onClick={() => setShowManageEmployees(!showManageEmployees)} className="px-4 py-2 bg-orange-600 text-white rounded-lg">
+                  <Users />Управление
+                </button>
+              </div>
+
+              {showAddEmployee && (
+                <div className="mt-4 p-4 bg-purple-50 rounded-lg">
+                  <h3 className="font-semibold mb-3">Новый сотрудник</h3>
+                  <div className="flex gap-3">
+                    <input type="text" value={newEmployeeName} onChange={(e) => setNewEmployeeName(e.target.value)} placeholder="Имя" className="flex-1 px-3 py-2 border rounded-lg" onKeyPress={(e) => e.key === 'Enter' && addEmployee()} />
+                    <button onClick={addEmployee} className="px-4 py-2 bg-purple-600 text-white rounded-lg">Добавить</button>
+                    <button onClick={() => { setShowAddEmployee(false); setNewEmployeeName(''); }} className="px-4 py-2 bg-gray-300 rounded-lg">Отмена</button>
+                  </div>
+                </div>
+              )}
+
+              {showManageEmployees && (
+                <div className="mt-4 p-4 bg-orange-50 rounded-lg">
+                  <h3 className="font-semibold mb-3">Сотрудники</h3>
+                  <div className="grid grid-cols-4 gap-3">
+                    {employees.map(emp => (
+                      <div key={emp} className="flex justify-between p-3 bg-white rounded-lg border">
+                        <span>{emp}</span>
+                        <button onClick={() => deleteEmployee(emp)} className="text-red-600"><X /></button>
+                      </div>
+                    ))}
+                  </div>
+                  <button onClick={() => setShowManageEmployees(false)} className="mt-4 px-4 py-2 bg-gray-300 rounded-lg">Закрыть</button>
+                </div>
+              )}
+
+              {showClearConfirm && (
+                <div className="mt-4 p-6 bg-red-50 rounded-lg">
+                  <h3 className="text-xl font-bold text-red-800 mb-4">⚠️ Удаление смен</h3>
+                  {clearStep === 1 ? (
+                    <>
+                      <p className="mb-4">Удалить все смены?</p>
+                      <div className="flex gap-3">
+                        <button onClick={processClearMonth} className="px-6 py-3 bg-orange-600 text-white rounded-lg">Продолжить</button>
+                        <button onClick={() => { setShowClearConfirm(false); setClearStep(1); }} className="px-6 py-3 bg-gray-300 rounded-lg">Отмена</button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="mb-4 font-bold">ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ!</p>
+                      <div className="flex gap-3">
+                        <button onClick={processClearMonth} className="px-6 py-3 bg-red-600 text-white rounded-lg">ДА, УДАЛИТЬ</button>
+                        <button onClick={() => { setShowClearConfirm(false); setClearStep(1); }} className="px-6 py-3 bg-gray-300 rounded-lg">Отмена</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-xl p-6">
+              <div className="flex justify-between mb-6">
+                <button onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))} className="px-4 py-2 bg-gray-200 rounded-lg">← Назад</button>
+                <h2 className="text-2xl font-bold">{currentMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}</h2>
+                <button onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))} className="px-4 py-2 bg-gray-200 rounded-lg">Вперед →</button>
+              </div>
+
+              <div className="grid grid-cols-7 gap-2">
+                {dayNames.map(day => <div key={day} className="text-center font-bold py-2">{day}</div>)}
+                {Array(days[0].getDay() === 0 ? 6 : days[0].getDay() - 1).fill(null).map((_, i) => <div key={`e-${i}`} className="min-h-40"></div>)}
+                {days.map(date => {
+                  const dateKey = getDateKey(date);
+                  const daySchedule = schedule[dateKey] || {};
+                  
+                  return (
+                    <div key={dateKey} className="bg-gray-50 rounded-lg p-2 min-h-40 border-2">
+                      <div className="flex justify-between mb-2">
+                        <div className="font-semibold">{date.getDate()}</div>
+                        <div className="flex gap-1">
+                          <button onClick={() => copyDay(dateKey)} className="p-1 text-blue-600"><Copy /></button>
+                          {copiedDay && <button onClick={() => pasteDay(dateKey)} className="p-1 text-green-600"><FileText /></button>}
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        {shifts.map(shift => {
+                          const shiftEmployees = daySchedule[shift.id] || [];
+                          const filtered = filterEmployee ? shiftEmployees.filter(e => e.name === filterEmployee) : shiftEmployees;
+                          if (filtered.length === 0) return null;
+                          
+                          const total = getTotalHours(dateKey, shift.id);
+                          const isPartial = total < shift.duration;
+                          
+                          return (
+                            <div key={shift.id} className="mb-2">
+                              <div className="flex justify-between mb-1">
+                                <div className="text-xs font-semibold text-indigo-700">{shift.name}</div>
+                                {isPartial && (
+                                  <div className="flex items-center gap-1 text-xs text-orange-600">
+                                    <Clock /><span>{total}/{shift.duration}ч</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="text-xs text-gray-500 mb-1">{shift.time}</div>
+                              {filtered.map((emp, i) => (
+                                <div key={i} className={`p-1.5 rounded border ${getStatusColor(emp.status)} text-xs mb-1`}>
+                                  <div className="flex justify-between">
+                                    <div className="flex gap-1">
+                                      <span className="font-medium">{emp.name}</span>
+                                      {emp.hours !== shift.duration && <span className="text-gray-600">({emp.hours}ч)</span>}
+                                    </div>
+                                    <button onClick={() => removeEmployee(dateKey, shift.id, emp.name)} className="text-red-600"><Trash2 /></button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mt-6 bg-white rounded-2xl shadow-xl p-6">
+              <h3 className="text-xl font-bold mb-4">Легенда</h3>
+              <div className="flex gap-4 mb-4">
+                <div className="flex items-center gap-2"><div className="w-6 h-6 bg-green-100 border-2 border-green-300"></div><span>Работает</span></div>
+                <div className="flex items-center gap-2"><div className="w-6 h-6 bg-yellow-100 border-2 border-yellow-300"></div><span>Отпуск</span></div>
+                <div className="flex items-center gap-2"><div className="w-6 h-6 bg-red-100 border-2 border-red-300"></div><span>Выходной</span></div>
+                <div className="flex items-center gap-2"><Clock /><span>Частичное покрытие</span></div>
+              </div>
+              <div className="text-sm text-gray-600">
+                <p><strong>Смены (UTC):</strong></p>
+                <p>• Смена A: 00:00-09:00 (9ч)</p>
+                <p>• Смена B: 06:00-15:00 (9ч)</p>
+                <p>• Смена C: 15:00-00:00 (9ч)</p>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     };
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(ShiftScheduler));
+    root.render(<ShiftScheduler />);
   </script>
 </body>
 </html>
